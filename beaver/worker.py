@@ -140,6 +140,8 @@ class Worker(object):
 
         # check existent files
         for fid, file in list(self.files_map.iteritems()):
+            if file is sys.stdin:
+                continue
             try:
                 st = os.stat(file.name)
             except EnvironmentError, err:
