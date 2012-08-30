@@ -214,6 +214,7 @@ def run_worker(options):
     else:
         raise Exception('Invalid transport {0}'.format(options.transport))
     transport.fields = options.fields or {}
+    transport._type = options._type or 'file'
     try:
         utils.log("Starting worker...")
         l = Worker(options, transport.callback)
