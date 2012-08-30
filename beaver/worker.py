@@ -4,7 +4,7 @@ import stat
 import sys
 import time
 import beaver.utils as utils
-
+import select
 
 class Worker(object):
     """Looks for changes in all files of a directory.
@@ -161,7 +161,14 @@ class Worker(object):
                 self.watch(fname)
 
     def readfile(self, file):
-        lines = file.readlines()
+        lines = []
+        if file is sys.stdin:
+            #Need to shift sys.stdin to non-blocking and buffer
+            rfds, wfds, efds = select.select( [file], [], [], 1)
+            if rfds:
+                lines = sys.stdin.readlines()
+        else:
+            lines = file.readlines()
         if lines:
             self.callback(file.name, lines)
 
