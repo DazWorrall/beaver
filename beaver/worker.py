@@ -56,6 +56,8 @@ class Worker(object):
                 lines = self.tail(file.name, tail_lines)
                 if lines:
                     self.callback(file.name, lines)
+        if args.stdin:
+            self.files_map['stdin'] = sys.stdin
 
     def __del__(self):
         self.close()
@@ -124,7 +126,6 @@ class Worker(object):
         else:
             for name in self.listdir():
                 files.append(os.path.realpath(os.path.join(self.folder, name)))
-
         for absname in files:
             try:
                 st = os.stat(absname)

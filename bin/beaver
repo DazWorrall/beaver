@@ -39,6 +39,7 @@ parser.add_argument('-m', '--mode', help='bind or connect mode', dest='mode', ch
 parser.add_argument('-p', '--path', help='path to log files', dest='path')
 parser.add_argument('-f', '--files', help='space-separated filelist to watch. Overrides --path argument', dest='files', nargs='+')
 parser.add_argument('-t', '--transport', help='log transport method', dest='transport', choices=['rabbitmq', 'redis', 'stdout', 'zmq'])
+parser.add_argument('--stdin', help='read lines from stdin', dest='stdin', action='store_true')
 
 # Support env variable parsing as well
 files = os.environ.get("BEAVER_FILES", None)
